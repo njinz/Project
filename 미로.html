@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>미로</title>
+    <script>
+         var map=[
+        [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
+        [1,0,0,0,0,0,0,0,0,0,0,1,1,0,2],
+        [1,0,1,1,1,1,1,1,1,1,0,0,1,0,1],
+        [1,0,1,0,0,0,0,0,0,1,1,0,1,0,1],
+        [1,0,1,0,1,1,1,1,0,1,0,0,1,0,1],
+        [1,0,1,0,1,1,0,0,0,1,0,1,1,0,1],
+        [1,0,1,0,1,0,0,1,0,1,0,0,1,0,1],
+        [1,0,1,0,1,0,1,0,1,0,1,0,1,0,1],
+        [1,0,0,0,1,0,0,0,1,0,0,0,1,0,1],
+        [1,1,1,1,1,0,1,0,1,1,0,1,1,0,1],
+        [1,0,0,0,1,0,1,0,1,1,0,0,1,0,1],
+        [1,0,1,0,1,0,1,0,0,1,1,0,1,0,1],
+        [1,0,1,0,1,1,1,1,0,1,1,0,1,0,1],
+        [1,3,1,0,0,0,0,0,0,1,0,0,0,0,1],
+        [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1]
+         ];
+
+         //Q1.map이 여러개일 경우에는?
+         //배열 maplist를 만들어 map들을 관리한다. =>3차원 배열
+
+         //Q2.replay 기능(자신의 플레이를 다시보여주는 기능)을 하려면?
+         //사용자가 키 누를때마다 이동한 경로 좌표를 배열로 저장하면 된다.
+
+         //Q3.최단거리?
+         //겹치는 부분을 삭제한다. 
+
+         //Q4.저장기능
+         //nowX nowY좌표 저장.
+
+        var tableX=map[0].length;
+        var tableY=map.length;
+
+        function madeTable(){
+            var str="";
+            str+="<table border=1 cellspacing=0 >";
+            
+            for(var y=0;y<tableY;y++){
+                str+="<tr>";
+            for(var x=0;x<tableX;x++){
+                str+="<td width=24 height=24 id=y"+y+"x"+x+"></td>";
+             }
+                str+="</tr>"; 
+            }
+            str+="</table>";
+            return str;
+        };
+        
+        function changeColor(id,color){
+            document.getElementById(id).style.backgroundColor=color
+        };
+
+        function copyArray(){
+            for(var y=0;y<tableY;y++){
+                for(var x=0;x<tableX;x++){
+                    switch(map[y][x]){
+                        case 0:
+                        changeColor("y"+y+"x"+x,"white")
+                        break;
+                        case 1:
+                        changeColor("y"+y+"x"+x,"red");
+                        break;
+                        case 2:
+                        changeColor("y"+y+"x"+x,"yellow");
+                        break;
+                        case 3:
+                        document.getElementById("y"+y+"x"+x).innerHTML="<img width=20 height=20 src='img/Kkobuk.jpg'>";
+                        break;
+                    }
+                   
+                    }
+                }
+
+            }
+            
+
+        window.onload=function(){
+            document.getElementById("console").innerHTML=
+            madeTable();
+            copyArray();
+
+
+        }
+
+        var nowX=1;
+        var nowY=13; //꼬부기 시작점 좌표
+        function inputFunction(e){
+            // alert(e);
+            switch(e){
+                case 56://위쪽
+                switch(map[nowY-1][nowX]){//한칸 위로 올라갔을때(nowY-1일때) 벽(red)인지 아닌지 확인
+                    case 0: //흰색
+                    break;
+                    case 1: //빨간색
+                    return; //주의! return 은 함수를 빠져나가버리고 뒷부분 실행안됨.
+                    case 2:
+                    alert("축! 탈출성공!")
+                    break;
+                }
+                document.getElementById("y"+nowY+"x"+nowX).innerHTML=""; //한칸 위로 간후 원위치에서는 꼬부기 삭제
+                nowY--; //y=12; x=1;
+                document.getElementById("y"+nowY+"x"+nowX).innerHTML="<img width=20 height=20 src='img/Kkobuk.jpg'>"; 
+                break;
+
+                case 52: //왼쪽
+                switch(map[nowY][nowX-1]){
+                    case 0:
+                    break;
+                    case 1:
+                    return;
+                    case 2:
+                    alert("축! 탈출성공!")
+                    break;
+                }
+                document.getElementById("y"+nowY+"x"+nowX).innerHTML="";
+                nowX--;
+                document.getElementById("y"+nowY+"x"+nowX).innerHTML="<img width=20 height=20 src='img/Kkobuk.jpg'>"; 
+                break;
+                case 54://오른쪽
+                switch(map[nowY][nowX+1]){
+                    case 0:
+                    break;
+                    case 1:
+                    return;
+                    case 2:
+                    alert("축! 탈출성공!")
+                    break;
+                } 
+                document.getElementById("y"+nowY+"x"+nowX).innerHTML="";
+                nowX++;
+                document.getElementById("y"+nowY+"x"+nowX).innerHTML="<img width=20 height=20 src='img/Kkobuk.jpg'>"; 
+                break;
+
+                case 53: //아래쪽
+                switch(map[nowY+1][nowX]){
+                    case 0:
+                    break;
+                    case 1:
+                    return;
+                    case 2:
+                    alert("축! 탈출성공!")
+                    break;
+                } 
+                document.getElementById("y"+nowY+"x"+nowX).innerHTML="";
+                nowY++;
+                document.getElementById("y"+nowY+"x"+nowX).innerHTML="<img width=20 height=20 src='img/Kkobuk.jpg'>"; 
+                break;
+            }
+        }
+
+    </script>
+    
+</head>
+<body onkeypress="inputFunction(event.keyCode)">  <!--키 이동시키기 inputFunction:메소드 event:내장객체(이미 있는 객체)-->
+   <div id="console"></div>
+    
+</body>
+</html>
