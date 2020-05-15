@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+   
+
+<script>
+var start;
+var end;
+var price;
+var time;
+
+function startC(){
+start=new Date();
+document.getElementById("p1").innerHTML=start;
+}
+function endC(){
+end=new Date();
+document.getElementById("p2").innerHTML=end;
+}
+function timeC(){
+time=end.getTime()-start.getTime();
+
+var hours=(time/(1000*60*60))%24;
+var minutes=(time/(1000*60))%60;
+var seconds=(time/1000)%60;
+
+document.getElementById("p3").innerHTML=Math.floor(hours)+"hour"+Math.floor(minutes)+"minute"+Math.floor(seconds)+"second";
+}
+function price(){
+time=end.getTime()-start.getTime();
+price=time*0.2777777777777778;
+price=price/100000;
+price=price*100;
+document.getElementById("p4").innerHTML=Math.floor(price)+"원";
+}
+</script>
+</head>
+
+<body>
+<h3>PC방 요금 정산</h3>
+<table>
+<tr>
+<td><input type="button" id="c1" onclick="startC()" value="사용시작"></td>
+<td><div id="p1"></div></td>
+</tr>
+<tr>
+<td><input type="button" id="c2" onclick="endC()" value="사용종료"></td>
+<td><div id="p2"></div></td>
+</tr>
+<tr>
+<td><input type="button" id="c3" onclick="timeC()" value="사용시간"></td>
+<td><div id="p3"></div></td>
+</tr>
+<tr>
+<td><input type="button" id="c4" onclick="price()" value="요금정산" ></td>
+<td><div id="p4"></div></td>
+</tr>
+</table>
+</body>
+</html>

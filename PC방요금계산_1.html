@@ -1,0 +1,29 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+<title>Document</title>
+</head>
+
+<script>
+function calculate(startTime, endTime) {
+var startTime = new Date(document.getElementById("startTime").value);
+var endTime = new Date(document.getElementById("endTime").value);
+result = endTime.getTime() - startTime.getTime();
+var pay = result / 1000 / 60 / 60 * 1200 + "원";
+document.getElementById("result").innerHTML = pay;
+}
+</script>
+
+<body>
+<input type="datetime-local" id="startTime">
+<input type="datetime-local" id="endTime">
+<input type="button" onclick="calculate();" value="계산"></button>
+<p id="result"></p>
+</body>
+
+</html>
